@@ -29,7 +29,14 @@
 
 <script>
   async function loadMessages() {
-    const key = prompt("Enter admin password:");
+    let key = localStorage.getItem("admin_key");
+
+    // 如果 localStorage 沒有密碼 → 要求輸入
+    if (!key) {
+      key = prompt("Enter admin password:");
+      if (!key) return;
+      localStorage.setItem("admin_key", key);
+    }
 
     const res = await fetch("https://free-serverless.ckc-2d8.workers.dev/list", {
       headers: {
@@ -37,9 +44,11 @@
       }
     });
 
+    // 如果密碼錯誤 → 清除 localStorage → 再要求一次
     if (res.status === 401) {
       alert("Wrong password");
-      return;
+      localStorage.removeItem("admin_key");
+      return loadMessages(); // 再跑一次
     }
 
     const data = await res.json();
