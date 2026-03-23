@@ -11,7 +11,7 @@ document.getElementById("contact-form").addEventListener("submit", async (e) => 
   document.getElementById("status").textContent = "Sending...";
 
   try {
-    const res = await fetch("https://faas-tor1-xxxx.functions.digitaloceanspaces.com/api/contact/index", {
+    const res = await fetch("https://faas-tor1-70ca848e.doserverless.co/api/contact/index", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
