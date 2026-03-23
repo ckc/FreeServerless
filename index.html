@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Serverless Demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>Free Serverless Contact Form</h1>
+
+    <form id="contact-form">
+      <label>
+        Name
+        <input type="text" name="name" required />
+      </label>
+
+      <label>
+        Email
+        <input type="email" name="email" required />
+      </label>
+
+      <label>
+        Message
+        <textarea name="message" required></textarea>
+      </label>
+
+      <button type="submit">Send</button>
+    </form>
+
+    <p id="status"></p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
