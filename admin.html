@@ -1,33 +1,54 @@
-<h1>Contact Messages</h1>
-<table id="messages" border="1">
-  <thead>
-    <tr>
-      <th>ID</th><th>Name</th><th>Email</th><th>Message</th><th>Time</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin – Messages</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+    th { background: #eee; }
+  </style>
+</head>
+<body>
+  <h1>Messages</h1>
 
-<script>
-async function load() {
-  const res = await fetch("https://faas-xxx.functions.digitaloceanspaces.com/api/admin/index");
-  const data = await res.json();
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Message</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody id="messages"></tbody>
+  </table>
 
-  const tbody = document.querySelector("#messages tbody");
-  tbody.innerHTML = "";
+  <script>
+    async function loadMessages() {
+      const res = await fetch("https://free-serverless.ckc-2d8.workers.dev/list");
+      const data = await res.json();
 
-  data.forEach(row => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${row.id}</td>
-      <td>${row.name}</td>
-      <td>${row.email}</td>
-      <td>${row.message}</td>
-      <td>${row.created_at}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
+      const tbody = document.querySelector("#messages");
+      tbody.innerHTML = "";
 
-load();
-</script>
+      data.forEach(row => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.id}</td>
+          <td>${row.name}</td>
+          <td>${row.email}</td>
+          <td>${row.message}</td>
+          <td>${row.created_at}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    loadMessages();
+  </script>
+</body>
+</html>
