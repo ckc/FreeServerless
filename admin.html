@@ -27,28 +27,39 @@
     <tbody id="messages"></tbody>
   </table>
 
-  <script>
-    async function loadMessages() {
-      const res = await fetch("https://free-serverless.ckc-2d8.workers.dev/list");
-      const data = await res.json();
+<script>
+  async function loadMessages() {
+    const key = prompt("Enter admin password:");
 
-      const tbody = document.querySelector("#messages");
-      tbody.innerHTML = "";
+    const res = await fetch("https://free-serverless.ckc-2d8.workers.dev/list", {
+      headers: {
+        "x-admin-key": key
+      }
+    });
 
-      data.forEach(row => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${row.id}</td>
-          <td>${row.name}</td>
-          <td>${row.email}</td>
-          <td>${row.message}</td>
-          <td>${row.created_at}</td>
-        `;
-        tbody.appendChild(tr);
-      });
+    if (res.status === 401) {
+      alert("Wrong password");
+      return;
     }
 
-    loadMessages();
-  </script>
+    const data = await res.json();
+    const tbody = document.querySelector("#messages");
+    tbody.innerHTML = "";
+
+    data.forEach(row => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${row.id}</td>
+        <td>${row.name}</td>
+        <td>${row.email}</td>
+        <td>${row.message}</td>
+        <td>${row.created_at}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  loadMessages();
+</script>
 </body>
 </html>
